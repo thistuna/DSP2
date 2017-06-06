@@ -30,24 +30,28 @@ int bmp24::read(std::string& filename){
 		}
 
 		if(headerSize == 40){
+			puts("Windows Bitmap");
 			this->infomationHeader = new infomationHeader_t;
 			this->infomationHeader->biSize = 40;
 			if(!fread(&this->infomationHeader->biWidth, 36, 1, fin)){
 				fclose(fin);
 				return -4;
 			}
-			this->Height = this->infomationHeader->biHeight;
-			this->Width  = this->infomationHeader->biWidth;
+			this->Height    = this->infomationHeader->biHeight;
+			this->Width     = this->infomationHeader->biWidth;
+			this->BitCount  = this->infomationHeader->biBitCount;
 		}
 		else if(headerSize == 12){
+			puts("OS2 bitmap");
 			this->coreHeader = new coreHeader_t;
 			this->coreHeader->bcSize = 12;
 			if(!fread(&this->coreHeader->bcWidth, 8, 1, fin)){
 				fclose(fin);
 				return -5;
 			}
-			this->Height = this->coreHeader->bcHeight;
-			this->Width  = this->coreHeader->bcWidth;
+			this->Height   = this->coreHeader->bcHeight;
+			this->Width    = this->coreHeader->bcWidth;
+			this->BitCount = this->coreHeader->bcBitCount;
 		}
 		else{
 			fclose(fin);
@@ -57,8 +61,48 @@ int bmp24::read(std::string& filename){
 
 	for(int i=this->fileHeader->bfOffBits - sizeof fileHeader_t - sizeof infomationHeader_t; i-->0; getc(fin));
 
-	printf("height: %d", this->infomationHeader->biHeight);
-	printf("width:  %d", this->infomationHeader->biWidth);
+/*
+	printf("size:         %d\n", this->infomationHeader->biSize);
+	printf("width:        %d\n", this->infomationHeader->biWidth);
+	printf("height:       %d\n", this->infomationHeader->biHeight);
+	printf("planes:       %d\n", this->infomationHeader->biPlanes);
+	printf("bitcount:     %d\n", this->infomationHeader->biBitCount);
+	printf("compression:  %d\n", this->infomationHeader->biCompression);
+	printf("sizeimage:    %d\n", this->infomationHeader->biSizeImage);
+	printf("XPixPerMeter: %d\n", this->infomationHeader->biXPixPerMeter);
+	printf("YPixPerMeter: %d\n", this->infomationHeader->biYPixPerMeter);
+	printf("ClrUsed:      %d\n", this->infomationHeader->biClrUsed);
+	printf("CirImportant: %d\n", this->infomationHeader->biCirImportant);*/
+
+//	RGB<uint8_t> rgbtemp;// = RGB<uint8_t>(0,0,0);
+	//data = std::vector<std::vector<RGB<uint8_t>>>(128,std::vector<RGB<uint8_t>>(128,RGB<uint8_t>(0,0,0)));
+
+	/*for(int i=this->Height; i; ){
+		--i;
+		if(this->BitCount == 24){
+			int count=0;
+			for(int j=0; j<this->Width; ++j){
+				data[i][j].b(getc(fin));
+				data[i][j].g(getc(fin));
+				data[i][j].r(getc(fin));
+				count += 3;
+			}
+			while(count){
+				--count;
+				getc(fin);
+			}
+		}
+		else if(this->BitCount == 32){
+			for(int j=0; j<this->Width; ++j){
+				data[i][j].b(getc(fin));
+				data[i][j].g(getc(fin));
+				data[i][j].r(getc(fin));
+				getc(fin);
+			}
+		}
+	}*/
+
+	puts("end");
 
 	return 0;
 }

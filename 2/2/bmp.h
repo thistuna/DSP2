@@ -9,8 +9,8 @@
 #pragma pack(2)
 typedef struct{					/* ファイルヘッダ */
 	uint16_t bfType;			/* ファイルタイプ */
-	uint32_t bfSize;		/* ファイルサイズ */
-	uint16_t bfReserved1;			/* 予約領域 */
+	uint32_t bfSize;			/* ファイルサイズ */
+	uint16_t bfReserved1;		/* 予約領域 */
 	uint16_t bfReserved2;		/* 予約領域 */
 	uint32_t bfOffBits;			/* ファイル先頭から画像データまでのオフセット[byte] */
 }fileHeader_t;
@@ -50,6 +50,7 @@ private:
 	std::vector<std::vector<RGB<uint8_t>>> data;
 	int Width;
 	int Height;
+	int BitCount;
 public:
 	bmp24();
 	bmp24(std::string& filename);

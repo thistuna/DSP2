@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
-#include "./RGB_YCC.h"
 #include "./bmp.h"
 
 extern std::string startMessage;
@@ -10,6 +9,8 @@ std::string bmpfilename = "..\\samp.bmp";
 
 int main(){
 	bmp24 bmpdata;
+
+	RGB<uint8_t> rgbclass(0,0,0);
 
 	std::cout << startMessage << std::endl;
 
