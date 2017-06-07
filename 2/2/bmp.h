@@ -1,10 +1,10 @@
 #ifndef __BMP__
 #define __BMP__
 
-#include "./RGB_YCC.h"
 #include <stdint.h>
 #include <vector>
 #include <string>
+#include "./RGB_YCC.h"
 
 #pragma pack(2)
 typedef struct{					/* ファイルヘッダ */
@@ -47,7 +47,7 @@ private:
 	fileHeader_t* fileHeader;
 	infomationHeader_t* infomationHeader;
 	coreHeader_t* coreHeader;
-	std::vector<std::vector<RGB<uint8_t>>> data;
+	std::vector<std::vector<rgb24>> data;
 	int Width;
 	int Height;
 	int BitCount;

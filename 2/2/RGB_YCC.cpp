@@ -1,57 +1,6 @@
 #include "./RGB_YCC.h"
 
-template <class T>
-RGB<T>::RGB(T r, T g, T b){
-	this->red = r;
-	this->green = g;
-	this->blue = b;
-}
-
-template <class T>
-void RGB<T>::r(T val){
-	this->red = val;
-}
-
-template <class T>
-void RGB<T>::g(T val){
-	this->green = val;
-}
-
-template <class T>
-void RGB<T>::b(T val){
-	this->blue = val;
-}
-
-template <class T>
-constexpr T RGB<T>::r() const{
-	return this->red;
-}
-
-template <class T>
-constexpr T RGB<T>::g() const{
-	return this->green;
-}
-
-template <class T>
-constexpr T RGB<T>::b() const{
-	return this->blue;
-}
-
-template <class T>
-constexpr T RGB<T>::y() const{
-	return 0.299*this->red + 0.587*this->green + 0.144*this->blue;
-}
-
-template <class T>
-constexpr T RGB<T>::cb() const{
-	return -0.169*this->red - 0.331*this->green + 0.500*this->blue;
-}
-
-template <class T>
-constexpr T RGB<T>::cr() const{
-	return 0.500*this->red - 0.419*this->green - 0.081*this->blue;
-}
-
+/*
 template <class T>
 YCC<T> RGB<T>::ycc(){
 	return YCC(this->y(), this->cb(), this->cr());
@@ -123,4 +72,50 @@ template <class T>
 YCC<T> YCC<T>::operator = (RGB<T>& obj){
 	*this = obj.ycc();
 	return *this;
+}*/
+
+rgb24::rgb24(){
+	rgb24(0,0,0);
+}
+
+rgb24::rgb24(uint8_t r, uint8_t g, uint8_t b){
+	this->red = r;
+	this->green = g;
+	this->blue = b;
+}
+
+void rgb24::r(uint8_t val){
+	this->red = val;
+}
+
+void rgb24::g(uint8_t val){
+	this->green = val;
+}
+
+void rgb24::b(uint8_t val){
+	this->blue = val;
+}
+
+constexpr uint8_t rgb24::r() const{
+	return this->red;
+}
+
+constexpr uint8_t rgb24::g() const{
+	return this->green;
+}
+
+constexpr uint8_t rgb24::b() const{
+	return this->blue;
+}
+
+constexpr uint8_t rgb24::y() const{
+	return 0.299*this->red + 0.587*this->green + 0.144*this->blue;
+}
+
+constexpr uint8_t rgb24::cb() const{
+	return -0.169*this->red - 0.331*this->green + 0.500*this->blue;
+}
+
+constexpr uint8_t rgb24::cr() const{
+	return 0.500*this->red - 0.419*this->green - 0.081*this->blue;
 }
