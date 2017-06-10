@@ -61,7 +61,7 @@ int bmp24::read(std::string& filename){
 
 	for(int i=this->fileHeader->bfOffBits - sizeof fileHeader_t - sizeof infomationHeader_t; i-->0; getc(fin));
 
-/*
+
 	printf("size:         %d\n", this->infomationHeader->biSize);
 	printf("width:        %d\n", this->infomationHeader->biWidth);
 	printf("height:       %d\n", this->infomationHeader->biHeight);
@@ -72,12 +72,11 @@ int bmp24::read(std::string& filename){
 	printf("XPixPerMeter: %d\n", this->infomationHeader->biXPixPerMeter);
 	printf("YPixPerMeter: %d\n", this->infomationHeader->biYPixPerMeter);
 	printf("ClrUsed:      %d\n", this->infomationHeader->biClrUsed);
-	printf("CirImportant: %d\n", this->infomationHeader->biCirImportant);*/
+	printf("CirImportant: %d\n", this->infomationHeader->biCirImportant);
 
-//	RGB<uint8_t> rgbtemp;// = RGB<uint8_t>(0,0,0);
-	//data = std::vector<std::vector<RGB<uint8_t>>>(128,std::vector<RGB<uint8_t>>(128,RGB<uint8_t>(0,0,0)));
+	data = std::vector<std::vector<rgb24>>(this->Height,std::vector<rgb24>(this->Width));
 
-	/*for(int i=this->Height; i; ){
+	for(int i=this->Height; i; ){
 		--i;
 		if(this->BitCount == 24){
 			int count=0;
@@ -86,6 +85,7 @@ int bmp24::read(std::string& filename){
 				data[i][j].g(getc(fin));
 				data[i][j].r(getc(fin));
 				count += 3;
+				count &= 3;
 			}
 			while(count){
 				--count;
@@ -100,8 +100,9 @@ int bmp24::read(std::string& filename){
 				getc(fin);
 			}
 		}
-	}*/
+	}
 
+	fclose(fin);
 	puts("end");
 
 	return 0;

@@ -1,29 +1,13 @@
 #ifndef __RGB_YCC__
 #define __RGB_YCC__
 
-/*template <class T> class YCC;
-
-template <class T>
-class YCC{
-	T Y;
-	T Cb;
-	T Cr;
-public:
-	YCC(T,T,T);
-	void y(T val);
-	void cb(T val);
-	void cr(T val);
-	constexpr T y() const;
-	constexpr T cb() const;
-	constexpr T cr() const;
-	constexpr T r() const;
-	constexpr T g() const;
-	constexpr T b() const;
-	RGB<T> rgb();
-	YCC operator = (RGB<T>&);
-};*/
+/* templateégÇ¢ÇΩÇ©Ç¡ÇΩÅcÅc */
 
 #include <stdint.h>
+
+class rgb24;
+class rgbf;
+class yccf;
 
 class rgb24{
 	uint8_t red;
@@ -35,14 +19,54 @@ public:
 	void r(uint8_t val);
 	void g(uint8_t val);
 	void b(uint8_t val);
-	constexpr uint8_t r() const;
-	constexpr uint8_t g() const;
-	constexpr uint8_t b() const;
-	constexpr uint8_t y() const;
-	constexpr uint8_t cb() const;
-	constexpr uint8_t cr() const;
-//	YCC<T> ycc();
-//	RGB operator = (YCC<T>&);
+	uint8_t r();
+	uint8_t g();
+	uint8_t b();
+	uint8_t y();
+	uint8_t cb();
+	uint8_t cr();
+	rgb24 operator = (rgbf x);
+	rgb24 operator = (yccf x);
+};
+
+class rgbf{
+	double red;
+	double green;
+	double blue;
+public:
+	rgbf(double,double,double);
+	rgbf();
+	void r(double val);
+	void g(double val);
+	void b(double val);
+	double r();
+	double g();
+	double b();
+	double y();
+	double cb();
+	double cr();
+	rgbf operator = (rgb24 x);
+	rgbf operator = (yccf x);
+};
+
+class yccf{
+	double Y;
+	double Cb;
+	double Cr;
+public:
+	yccf(double,double,double);
+	yccf();
+	void y(double val);
+	void cb(double val);
+	void cr(double val);
+	double y();
+	double cb();
+	double cr();
+	double r();
+	double g();
+	double b();
+	yccf operator = (rgb24);
+	yccf operator = (rgbf);
 };
 
 #endif

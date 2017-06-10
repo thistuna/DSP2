@@ -56,6 +56,9 @@ public:
 	bmp24(std::string& filename);
 	int read(std::string& filename);
 	int write(std::string& filename);
+	int height(){return this->Height;}
+	int width(){return this->Width;}
+	rgb24 px(int x, int y){return data[x][y];}
 };
 
 #endif
