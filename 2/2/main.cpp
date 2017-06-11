@@ -3,6 +3,7 @@
 #include <cstdio>
 #include "RGB_YCC.h"
 #include "bmp.h"
+#include "DCT.h"
 
 extern std::string startMessage;
 
@@ -15,15 +16,36 @@ int main(){
 
 	bmpdata.read(bmpfilename);
 
-	while(1){
-		unsigned int x,y;
-		std::cin >> x >> y;
-		if(x>=bmpdata.width() || y>=bmpdata.height()) break;
-		yccf a;
-		a = bmpdata.px(x,y);
-		printf("(%d,%d) r:%f g:%f b:%f y:%f cb:%f cr:%f\n",x,y,a.r(),a.g(),a.b(),a.y(),a.cb(),a.cr());
+	puts("read");
 
+	#define N 4
+
+	std::vector<std::vector<double>> x(bmpdata.height(),std::vector<double>(bmpdata.width()));
+
+	for(int xx=0; xx<x.size(); ++xx){
+		for(int yy=0; yy<x[xx].size(); ++yy){
+			yccf ycctemp;
+			ycctemp = bmpdata.px(xx,yy);
+			x[xx][yy] = ycctemp.y();
+		}
 	}
+
+	puts("convert");
+
+	auto X = dct(x);
+
+	puts("dct");
+
+	FILE* fout = fopen("out.txt", "w");
+
+	for(int yy=0; yy<X.size(); ++yy){
+		for(int xx=0; xx<X[yy].size(); ++xx){
+			fprintf(fout, "%f",X[xx][yy]);
+			putc(xx == X[yy].size()-1 ? '\n' : '\t', fout);
+		}
+	}
+
+	puts("output");
 }
 
 std::string startMessage =
